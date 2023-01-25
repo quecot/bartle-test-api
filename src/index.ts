@@ -1,6 +1,9 @@
 import bodyParser from 'body-parser';
 import express from 'express';
 import classifyFirstQuestion from '@src/classify_first_question.js';
+import classifyFourthQuestion from './classify_fourth_question';
+import classifySecondQuestion from './classify_second_question';
+import classifyThirdQuestion from './classify_third_question';
 
 const app = express();
 
@@ -16,6 +19,24 @@ app.get('/', (request, response) => {
 app.post('/classify-first-question', async (request, response) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
   const classification = await classifyFirstQuestion(request.body.answer);
+  response.status(200).send(classification);
+});
+
+app.post('/classify-second-question', async (request, response) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+  const classification = await classifySecondQuestion(request.body.answer);
+  response.status(200).send(classification);
+});
+
+app.post('/classify-third-question', async (request, response) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+  const classification = await classifyThirdQuestion(request.body.answer);
+  response.status(200).send(classification);
+});
+
+app.post('/classify-fourth-question', async (request, response) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+  const classification = await classifyFourthQuestion(request.body.answer);
   response.status(200).send(classification);
 });
 
