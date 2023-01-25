@@ -1,0 +1,47 @@
+{
+    "env": {
+        "es2021": true,
+        "node": true
+    },
+    "extends": [
+      "airbnb"
+    ],
+    "overrides": [
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "project": ["tsconfig.json"]
+    },
+    "settings": {
+        "import/resolver": {
+          "node": {
+            "extensions": [".ts"]
+          },
+          "alias": {
+            "map": [
+              [
+                "@interfaces",
+                "./src/interfaces"
+              ],
+              [
+                "@utils",
+                "./src/utils"
+              ],
+              [
+                "@src",
+                "./src"
+              ]
+            ],
+            "extensions": [
+              ".ts"
+            ]
+          }
+        }
+      },
+    "rules": {
+      "max-len": ["error", { "code": 150 }],
+      "@typescript-eslint/space-before-function-paren": "off",
+      "no-underscore-dangle": "off"
+    }
+}
