@@ -33,6 +33,15 @@ app.get('/votes', async (request, response) => {
   response.status(200).json(votes);
 });
 
+app.get('/votes/:id', async (request, response) => {
+  const { id } = request.params;
+  const [startLevel, startDot] = id.split('.');
+
+  const votes = await Vote.find({ startLevel, startDot });
+
+  response.status(200).json(votes);
+});
+
 app.post('/classify-first-question/:id', async (request, response) => {
   const { id } = request.params;
   const startDot = parseInt(id, 10);
