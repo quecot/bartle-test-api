@@ -1,9 +1,9 @@
 import bodyParser from 'body-parser';
 import express from 'express';
 import classifyFirstQuestion from '@src/classify_first_question.js';
-import classifyFourthQuestion from './classify_fourth_question.js';
-import classifySecondQuestion from './classify_second_question.js';
-import classifyThirdQuestion from './classify_third_question.js';
+import classifyFourthQuestion from '@src/classify_fourth_question.js';
+import classifySecondQuestion from '@src/classify_second_question.js';
+import classifyThirdQuestion from '@src/classify_third_question.js';
 
 const app = express();
 
