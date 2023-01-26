@@ -1,43 +1,126 @@
 import bodyParser from 'body-parser';
 import express from 'express';
+
 import classifyFirstQuestion from '@src/classify_first_question.js';
 import classifyFourthQuestion from '@src/classify_fourth_question.js';
 import classifySecondQuestion from '@src/classify_second_question.js';
 import classifyThirdQuestion from '@src/classify_third_question.js';
 
+import connectDb from '@utils/connect_db.js';
+import Vote from './models/Vote.js';
+
 const app = express();
+connectDb();
 
 app.use(bodyParser.json({ limit: '2mb' }));
 app.use(bodyParser.urlencoded({ limit: '2mb', extended: true }));
 app.use(express.json());
+
+const answerDictionary = new Map<string, number>();
+answerDictionary.set('Socializer', 1);
+answerDictionary.set('Explorer', 2);
+answerDictionary.set('Achiever', 3);
+answerDictionary.set('Killer', 4);
 
 // Endpoints
 app.get('/', (request, response) => {
   response.status(200).send('<h1>Hello, Express!</h1>');
 });
 
-app.post('/classify-first-question', async (request, response) => {
+app.get('/votes', async (request, response) => {
+  const votes = await Vote.find({});
+
+  response.status(200).json(votes);
+});
+
+app.post('/classify-first-question/:id', async (request, response) => {
+  const { id } = request.params;
+  const startDot = parseInt(id, 10);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
   const classification = await classifyFirstQuestion(request.body.answer);
-  response.status(200).send(classification);
+  const answer = answerDictionary.get(classification.replaceAll('"', ''));
+
+  let vote;
+  try {
+    vote = await Vote.findOne({ startLevel: 1, startDot, answer });
+    if (!vote) { throw Error(); }
+    vote = await Vote.findOneAndUpdate({ startLevel: 1, startDot, answer }, { $inc: { count: 1 } }, { new: true });
+  } catch {
+    vote = await Vote.create({
+      startLevel: 1, startDot, answer, count: 1,
+    });
+  }
+
+  response.status(200).send(vote);
 });
 
-app.post('/classify-second-question', async (request, response) => {
+app.post('/classify-second-question/:id', async (request, response) => {
+  const { id } = request.params;
+  const startDot = parseInt(id, 10);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
   const classification = await classifySecondQuestion(request.body.answer);
-  response.status(200).send(classification);
+  const answer = answerDictionary.get(classification.replaceAll('"', ''));
+
+  let vote;
+  try {
+    vote = await Vote.findOne({ startLevel: 2, startDot, answer });
+    if (!vote) { throw Error(); }
+    vote = await Vote.findOneAndUpdate({ startLevel: 2, startDot, answer }, { $inc: { count: 1 } }, { new: true });
+  } catch {
+    vote = await Vote.create({
+      startLevel: 2, startDot, answer, count: 1,
+    });
+  }
+
+  response.status(200).send(vote);
 });
 
-app.post('/classify-third-question', async (request, response) => {
+app.post('/classify-third-question/:id', async (request, response) => {
+  const { id } = request.params;
+  const startDot = parseInt(id, 10);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
   const classification = await classifyThirdQuestion(request.body.answer);
-  response.status(200).send(classification);
+  const answer = answerDictionary.get(classification.replaceAll('"', ''));
+
+  let vote;
+  try {
+    vote = await Vote.findOne({ startLevel: 3, startDot, answer });
+    if (!vote) { throw Error(); }
+    vote = await Vote.findOneAndUpdate({ startLevel: 3, startDot, answer }, { $inc: { count: 1 } }, { new: true });
+  } catch {
+    vote = await Vote.create({
+      startLevel: 3, startDot, answer, count: 1,
+    });
+  }
+
+  response.status(200).send(vote);
 });
 
-app.post('/classify-fourth-question', async (request, response) => {
+app.post('/classify-fourth-question/:id', async (request, response) => {
+  const { id } = request.params;
+  const startDot = parseInt(id, 10);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
   const classification = await classifyFourthQuestion(request.body.answer);
-  response.status(200).send(classification);
+  const answer = answerDictionary.get(classification.replaceAll('"', ''));
+
+  let vote;
+  try {
+    vote = await Vote.findOne({ startLevel: 4, startDot, answer });
+    if (!vote) { throw Error(); }
+    vote = await Vote.findOneAndUpdate({ startLevel: 4, startDot, answer }, { $inc: { count: 1 } }, { new: true });
+  } catch {
+    vote = await Vote.create({
+      startLevel: 4, startDot, answer, count: 1,
+    });
+  }
+
+  response.status(200).send(vote);
+});
+
+app.post('/clear-votes', async (request, response) => {
+  await Vote.deleteMany({});
+
+  response.sendStatus(200);
 });
 
 // Run server
