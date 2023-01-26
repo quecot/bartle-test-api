@@ -44,6 +44,7 @@
       "max-len": ["error", { "code": 150 }],
       "@typescript-eslint/space-before-function-paren": "off",
       "no-underscore-dangle": "off",
-      "@typescript-eslint/no-misused-promises": "off"
+      "@typescript-eslint/no-misused-promises": "off",
+      "no-param-reassign": "off"
     }
 }
