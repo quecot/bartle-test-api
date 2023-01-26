@@ -10,3 +10,5 @@
 **POST '/classify-fourth-question':** Classifies answers to the question "WHAT ARE YOUR GOALS IN LIFE?" in Bartle's four categories.<br/>
 
 _\*IMPORTANT:_ POST endpoints accept bodies with a JSON like {"answer":"colonizing mars"}
+
+Also, add your COHERE_API_KEY key in .env (get it from [https://midu.link/ia](https://midu.link/ia))
