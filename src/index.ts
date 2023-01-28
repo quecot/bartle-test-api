@@ -49,7 +49,7 @@ app.post('/classify-question-1/:id', async (request, response) => {
   const startDot = parseInt(id, 10);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
   const classification = await classifyFirstQuestion(request.body.answer);
-  const answer = answerDictionary.get(classification.replaceAll('"', ''));
+  const answer = answerDictionary.get(classification.substring(1, classification.length - 1));
 
   let vote;
   try {
@@ -70,7 +70,7 @@ app.post('/classify-question-2/:id', async (request, response) => {
   const startDot = parseInt(id, 10);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
   const classification = await classifySecondQuestion(request.body.answer);
-  const answer = answerDictionary.get(classification.replaceAll('"', ''));
+  const answer = answerDictionary.get(classification.substring(1, classification.length - 1));
 
   let vote;
   try {
@@ -91,7 +91,7 @@ app.post('/classify-question-3/:id', async (request, response) => {
   const startDot = parseInt(id, 10);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
   const classification = await classifyThirdQuestion(request.body.answer);
-  const answer = answerDictionary.get(classification.replaceAll('"', ''));
+  const answer = answerDictionary.get(classification.substring(1, classification.length - 1));
 
   let vote;
   try {
@@ -112,7 +112,7 @@ app.post('/classify-question-4/:id', async (request, response) => {
   const startDot = parseInt(id, 10);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
   const classification = await classifyFourthQuestion(request.body.answer);
-  const answer = answerDictionary.get(classification.replaceAll('"', ''));
+  const answer = answerDictionary.get(classification.substring(1, classification.length - 1));
 
   let vote;
   try {
