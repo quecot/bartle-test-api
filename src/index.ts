@@ -1,4 +1,5 @@
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import express from 'express';
 
 import classifyFirstQuestion from '@src/classify_first_question.js';
@@ -6,8 +7,8 @@ import classifyFourthQuestion from '@src/classify_fourth_question.js';
 import classifySecondQuestion from '@src/classify_second_question.js';
 import classifyThirdQuestion from '@src/classify_third_question.js';
 
+import Vote from '@src/models/Vote.js';
 import connectDb from '@utils/connect_db.js';
-import Vote from './models/Vote.js';
 
 const app = express();
 connectDb();
@@ -15,6 +16,7 @@ connectDb();
 app.use(bodyParser.json({ limit: '2mb' }));
 app.use(bodyParser.urlencoded({ limit: '2mb', extended: true }));
 app.use(express.json());
+app.use(cors());
 
 const answerDictionary = new Map<string, number>();
 answerDictionary.set('Socializer', 1);
@@ -42,7 +44,7 @@ app.get('/votes/:id', async (request, response) => {
   response.status(200).json(votes);
 });
 
-app.post('/classify-first-question/:id', async (request, response) => {
+app.post('/classify-question-1/:id', async (request, response) => {
   const { id } = request.params;
   const startDot = parseInt(id, 10);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
@@ -63,7 +65,7 @@ app.post('/classify-first-question/:id', async (request, response) => {
   response.status(200).send(vote);
 });
 
-app.post('/classify-second-question/:id', async (request, response) => {
+app.post('/classify-question-2/:id', async (request, response) => {
   const { id } = request.params;
   const startDot = parseInt(id, 10);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
@@ -84,7 +86,7 @@ app.post('/classify-second-question/:id', async (request, response) => {
   response.status(200).send(vote);
 });
 
-app.post('/classify-third-question/:id', async (request, response) => {
+app.post('/classify-question-3/:id', async (request, response) => {
   const { id } = request.params;
   const startDot = parseInt(id, 10);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
@@ -105,7 +107,7 @@ app.post('/classify-third-question/:id', async (request, response) => {
   response.status(200).send(vote);
 });
 
-app.post('/classify-fourth-question/:id', async (request, response) => {
+app.post('/classify-question-4/:id', async (request, response) => {
   const { id } = request.params;
   const startDot = parseInt(id, 10);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
