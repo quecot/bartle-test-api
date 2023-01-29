@@ -1,0 +1,14 @@
+name: stay alive
+
+on:
+  schedule:
+  - cron: "*/10 * * * *"
+
+jobs:
+  curl:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: curl webpage
+      run: |
+        curl https://bartle-test-api.onrender.com/
