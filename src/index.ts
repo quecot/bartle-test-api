@@ -53,7 +53,7 @@ app.get('/global-votes', async (request, response) => {
   });
 
   const totalVotes = voteCount.reduce((partialSum, a) => partialSum + a, 0);
-  const percentages = voteCount.map((vote) => ((100 * vote) / totalVotes).toFixed(2));
+  const percentages = voteCount.map((vote) => parseFloat(((100 * vote) / totalVotes).toFixed(2)));
 
   response.status(200).json(percentages);
 });
