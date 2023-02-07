@@ -5,6 +5,7 @@
 **GET '/':** Hello, world!<br/>
 **GET '/votes':** Get all votes<br/>
 **GET '/votes/:id':** Get votes from node. For example, `:id = 1.1` (level.nodeNumber)<br/>
+**GET '/global-votes':** Get answer (not result!) percentages<br/>
 
 **POST '/classify-question-1/:id':** Classifies answers to the question "HOW WOULD YOU DESCRIBE YOURSELF USING A FEW WORDS?" in Bartle's four categories.<br/>
 **POST '/classify-question-2/:id':** Classifies answers to the question "HOW DO YOU LIKE TO SPEND YOUR FREE TIME?" in Bartle's four categories.<br/>

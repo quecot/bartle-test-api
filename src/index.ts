@@ -44,6 +44,20 @@ app.get('/votes/:id', async (request, response) => {
   response.status(200).json(votes);
 });
 
+app.get('/global-votes', async (request, response) => {
+  const votes = await Vote.find({ });
+  const voteCount = [0, 0, 0, 0];
+
+  votes.forEach((vote) => {
+    voteCount[vote.answer - 1] += 1;
+  });
+
+  const totalVotes = voteCount.reduce((partialSum, a) => partialSum + a, 0);
+  const percentages = voteCount.map((vote) => ((100 * vote) / totalVotes).toFixed(2));
+
+  response.status(200).json(percentages);
+});
+
 app.post('/classify-question-1/:id', async (request, response) => {
   const { id } = request.params;
   const startDot = parseInt(id, 10);
