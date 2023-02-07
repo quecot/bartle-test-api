@@ -128,11 +128,11 @@ app.post('/classify-question-4/:id', async (request, response) => {
   response.status(200).send(vote);
 });
 
-app.post('/clear-votes', async (request, response) => {
-  await Vote.deleteMany({});
+// app.post('/clear-votes', async (request, response) => {
+//   await Vote.deleteMany({});
 
-  response.sendStatus(200);
-});
+//   response.sendStatus(200);
+// });
 
 // Run server
 const PORT = process.env.PORT || 3004;
